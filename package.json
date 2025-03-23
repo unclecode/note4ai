@@ -1,0 +1,29 @@
+{
+  "name": "note4ai",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "notes",
+    "editor",
+    "tiptap",
+    "markdown"
+  ],
+  "author": "unclecode",
+  "license": "MIT",
+  "description": "A minimalist note-taking app with TipTap editor",
+  "dependencies": {
+    "@tiptap/core": "^2.11.5",
+    "@tiptap/pm": "^2.11.5",
+    "@tiptap/starter-kit": "^2.11.5",
+    "autoprefixer": "^10.4.21",
+    "idb": "^8.0.2",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.0.15",
+    "vite": "^6.2.2"
+  }
+}

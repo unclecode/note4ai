@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Note4AI</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-primary: #1a1a1a;
+      --color-secondary: #2a2a2a;
+      --color-text: #e0e0e0;
+      --color-accent: #3b82f6;
+    }
+
+    .dark {
+      background-color: var(--color-primary);
+      color: var(--color-text);
+    }
+
+    .light {
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    .zen-mode {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+    }
+
+    .editor-content {
+      min-height: calc(100vh - 8rem);
+    }
+  </style>
+  <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body class="dark transition-colors duration-300">
+  <div id="app" class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-secondary p-4 flex justify-between items-center">
+      <div class="text-xl font-bold">Note4AI</div>
+      <div class="flex space-x-4">
+        <button id="themeToggle" class="p-2 rounded hover:bg-opacity-30 hover:bg-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+          </svg>
+        </button>
+        <button id="zenModeToggle" class="p-2 rounded hover:bg-opacity-30 hover:bg-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm1 0v12h12V4H4z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+    </header>
+    
+    <!-- Editor Container -->
+    <main class="flex-grow p-4">
+      <div id="editor" class="editor-content p-4 rounded bg-secondary bg-opacity-30"></div>
+    </main>
+    
+    <!-- Status Bar -->
+    <footer class="bg-secondary p-2 text-sm flex justify-between items-center">
+      <div id="status">Ready</div>
+      <div id="version">v0.1.0</div>
+    </footer>
+  </div>
+
+  <script type="module" src="src/js/main.js"></script>
+</body>
+</html>
