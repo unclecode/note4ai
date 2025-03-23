@@ -3,33 +3,62 @@
 /* TipTap Specific Styles */
 .ProseMirror {
   outline: none;
-  min-height: 100px;
-  padding: 1rem;
+  height: 100%;
+  padding: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .ProseMirror {
+    padding: 1rem;
+  }
 }
 
 .ProseMirror p {
   margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .ProseMirror h1 {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: bold;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
+  line-height: 1.3;
 }
 
 .ProseMirror h2 {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: bold;
   margin-top: 0.75rem;
   margin-bottom: 0.5rem;
+  line-height: 1.3;
 }
 
 .ProseMirror h3 {
-  font-size: 1.125rem;
+  font-size: 1.05rem;
   font-weight: bold;
   margin-top: 0.75rem;
   margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+@media (min-width: 640px) {
+  .ProseMirror p {
+    font-size: 1rem;
+  }
+  
+  .ProseMirror h1 {
+    font-size: 1.5rem;
+  }
+  
+  .ProseMirror h2 {
+    font-size: 1.25rem;
+  }
+  
+  .ProseMirror h3 {
+    font-size: 1.125rem;
+  }
 }
 
 .ProseMirror code {
@@ -97,4 +126,46 @@
   opacity: 0;
   transform: scale(0.95);
   transition: opacity 200ms, transform 200ms;
+}
+
+/* Zen Mode Helpers */
+#exitZenModeButton {
+    position: fixed;
+    z-index: 100000;
+  /* width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  transform: scale(1);
+  transition: transform 0.15s ease;
+  z-index: 1000; */
+}
+
+#exitZenModeButton:active {
+  transform: scale(1.2);
+}
+
+@media (max-width: 640px) {
+  #exitZenModeButton {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+  }
+}
+
+#mobileExitZone {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Body with zen mode */
+.in-zen-mode {
+  overflow: hidden;
+  touch-action: pan-x pan-y;
 }

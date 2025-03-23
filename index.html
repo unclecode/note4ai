@@ -2,27 +2,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Note4AI</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style type="text/tailwindcss">
     @theme {
-      --color-primary: #1a1a1a;
-      --color-secondary: #2a2a2a;
-      --color-text: #e0e0e0;
+      --color-dark-bg: #1a1a1a;
+      --color-dark-surface: #2a2a2a; 
+      --color-dark-text: #e0e0e0;
+      --color-light-bg: #f5f5f5;
+      --color-light-surface: #ffffff;
+      --color-light-text: #333333;
       --color-accent: #3b82f6;
     }
 
+    /* Dark theme */
     .dark {
-      background-color: var(--color-primary);
-      color: var(--color-text);
+      color-scheme: dark;
     }
 
+    .dark body, 
+    .dark #app {
+      background-color: var(--color-dark-bg);
+      color: var(--color-dark-text);
+    }
+
+    .dark header,
+    .dark footer {
+      background-color: var(--color-dark-bg);
+      /* background-color: var(--color-dark-surface); */
+    }
+
+    .dark #editor {
+      /* background-color: rgba(42, 42, 42, 0.4); */
+    }
+
+    /* Light theme */
     .light {
-      background-color: #f5f5f5;
-      color: #333;
+      color-scheme: light;
     }
 
+    .light body,
+    .light #app {
+      background-color: var(--color-light-bg);
+      color: var(--color-light-text);
+    }
+
+    .light header,
+    .light footer {
+      background-color: var(--color-light-surface);
+      border: 1px solid #eaeaea;
+    }
+
+    .light #editor {
+      background-color: rgba(255, 255, 255, 0.7);
+      border: 1px solid #eaeaea;
+    }
+
+    /* Zen Mode */
     .zen-mode {
       position: fixed;
       top: 0;
@@ -30,40 +67,59 @@
       width: 100%;
       height: 100%;
       z-index: 100;
+      padding: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .zen-mode {
+        padding: 2rem;
+      }
+    }
+
+    .zen-mode #editor {
+      height: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 0.5rem;
     }
 
     .editor-content {
-      min-height: calc(100vh - 8rem);
+      height: 100%;
+      overflow-y: auto;
     }
   </style>
   <link rel="stylesheet" href="src/css/style.css">
 </head>
 <body class="dark transition-colors duration-300">
-  <div id="app" class="min-h-screen flex flex-col">
+  <div id="app" class="h-screen flex flex-col overflow-hidden">
     <!-- Header -->
-    <header class="bg-secondary p-4 flex justify-between items-center">
-      <div class="text-xl font-bold">Note4AI</div>
-      <div class="flex space-x-4">
-        <button id="themeToggle" class="p-2 rounded hover:bg-opacity-30 hover:bg-white">
+    <header class="bg-secondary py-2 px-3 sm:p-4 flex justify-between items-center border-b border-opacity-10 border-stone-800">
+      <div class="text-lg sm:text-xl font-bold">Note4AI</div>
+      <div class="flex space-x-2 sm:space-x-4">
+        <button id="themeToggle" class="p-1.5 sm:p-2 rounded hover:bg-opacity-30 hover:bg-white transition-colors dark:hover:bg-neutral-800">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
           </svg>
         </button>
-        <button id="zenModeToggle" class="p-2 rounded hover:bg-opacity-30 hover:bg-white">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm1 0v12h12V4H4z" clip-rule="evenodd" />
+        <button id="zenModeToggle" class="p-1.5 sm:p-2 rounded hover:bg-opacity-30 hover:bg-white transition-colors dark:hover:bg-neutral-800" title="Toggle Zen Mode">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="4 8 4 4 8 4"></polyline>
+            <polyline points="20 4 20 8 16 8"></polyline>
+            <polyline points="4 16 4 20 8 20"></polyline>
+            <polyline points="20 20 20 16 16 16"></polyline>
           </svg>
         </button>
       </div>
     </header>
     
     <!-- Editor Container -->
-    <main class="flex-grow p-4">
-      <div id="editor" class="editor-content p-4 rounded bg-secondary bg-opacity-30"></div>
+    <main class="flex-grow p-2 sm:p-4 overflow-hidden">
+      <div id="editor" class="editor-content p-2 sm:p-4 rounded-md shadow-sm transition-all duration-300 h-full"></div>
     </main>
     
     <!-- Status Bar -->
-    <footer class="bg-secondary p-2 text-sm flex justify-between items-center">
+    <footer class="bg-secondary py-1.5 px-3 sm:p-2 text-xs sm:text-sm flex justify-between items-center border-t border-opacity-10 border-stone-800">
       <div id="status">Ready</div>
       <div id="version">v0.1.0</div>
     </footer>

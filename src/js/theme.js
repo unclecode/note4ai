@@ -1,29 +1,37 @@
 // Setup theme toggle functionality
 export function setupThemeToggle() {
   const themeToggle = document.getElementById('themeToggle');
+  const html = document.documentElement;
   const body = document.body;
   
   // Check for saved theme preference
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme) {
-    body.className = savedTheme;
-    updateThemeIcon(savedTheme);
-  }
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  applyTheme(savedTheme);
   
   // Toggle theme on button click
   themeToggle.addEventListener('click', () => {
-    const currentTheme = body.classList.contains('dark') ? 'dark' : 'light';
+    const currentTheme = html.classList.contains('dark') ? 'dark' : 'light';
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     
-    body.classList.remove(currentTheme);
-    body.classList.add(newTheme);
+    applyTheme(newTheme);
     
     // Save theme preference
     localStorage.setItem('theme', newTheme);
+  });
+  
+  // Apply theme to both html and body
+  function applyTheme(theme) {
+    // Remove both themes from html and body
+    html.classList.remove('dark', 'light');
+    body.classList.remove('dark', 'light');
+    
+    // Add new theme to html and body
+    html.classList.add(theme);
+    body.classList.add('transition-colors', 'duration-300');
     
     // Update the icon
-    updateThemeIcon(newTheme);
-  });
+    updateThemeIcon(theme);
+  }
 }
 
 // Update the theme toggle icon based on current theme
